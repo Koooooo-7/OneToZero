@@ -19,7 +19,10 @@
             return false;
         });
         ```
+        <br>
 //click事件监听 <br>
+
+
 ```
         $("#my_id").on("click",function(){
             $email = document.getElementById('my_email').value;
