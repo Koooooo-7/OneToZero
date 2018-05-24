@@ -1,0 +1,29 @@
+### 基于Layui框架。
+·
+<script>
+    layui.use(['form'], function(){
+        var $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer;
+
+        //监听提交
+        form.on('submit(*)', function(data){
+            $.ajax({
+                type:"post",
+                url:"{:url('user/register/doRegister')}",
+                datatype:"json",
+                contentType:"application/json",
+                data:JSON.stringify(data.field),
+                success: function (data) {
+                    layer.alert(JSON.stringify(data.msg));
+                    setTimeout(function(){window.location.href = data.url;},1000);
+
+                }
+            });
+            return false;
+        });
+
+
+    });
+</script>
+·
