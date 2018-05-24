@@ -1,6 +1,8 @@
 ### layui
- //监听提交
-        form.on('submit(*)', function(data){
+
+//监听提交
+ ·
+        form.on('submit(*)', function(data){
             $.ajax({
                 type:"post",
                 url:"{:url('user/register/doRegister')}",
@@ -28,5 +30,5 @@
                 success: function (data) {
                     layer.alert(JSON.stringify(data.msg));
                 }
-            });
-
+            });
+·
