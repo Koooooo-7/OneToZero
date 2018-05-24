@@ -1,7 +1,7 @@
 ### layui
 
-//监听提交
- ·
+//监听提交 <br>
+ `
         form.on('submit(*)', function(data){
             $.ajax({
                 type:"post",
@@ -18,7 +18,9 @@
             });
             return false;
         });
-//click事件监听
+        `
+//click事件监听 <br>
+`
         $("#my_id").on("click",function(){
             $email = document.getElementById('my_email').value;
             // layer.msg("点击了");
@@ -31,4 +33,4 @@
                     layer.alert(JSON.stringify(data.msg));
                 }
             });
-·
+`
