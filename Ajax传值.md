@@ -18,8 +18,9 @@
             });
             return false;
         });
-        ```
-        <br>
+        ```   
+        
+
 //click事件监听 <br>
 
 
@@ -36,4 +37,34 @@
                     layer.alert(JSON.stringify(data.msg));
                 }
             });
-```
+```   
+
+
+//邮箱验证keyup  
+layui.use(['form','element'], function(){
+        var $ = layui.jquery;
+        var form = layui.form
+            ,layer = layui.layer;
+
+        $("#mt-email").keyup(function(){
+            $email = document.getElementById('mt-email').value;
+            if(/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-]){2,5}(\.[a-zA-Z0-9_-])+/.test($email)){
+                setTimeout(function(){
+                    $.ajax({
+                        type:"get",
+                        url:"{:url('user/register/doRegister')}",
+                        data:{"email":$email},
+                        success: function (data) {
+                            if(data.msg){
+                                layer.msg(JSON.stringify(data.msg),{time:2000, shift: 6},function(){});
+                            }
+                            // layer.alert(JSON.stringify(data.msg));
+                        }
+                    });
+                    return false;
+                },1000);
+            }
+        });
+        return false;
+     });
+     
