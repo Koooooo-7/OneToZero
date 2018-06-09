@@ -1,0 +1,27 @@
+模板里面不能直接渲染json格式，
+需要在控制器里预先处理。
+ $info = json_decode($re['more'],true);  //关联数组
+ 解码，变成数组。
+ 关联数组总是和python的字典想到一起:smile:
+ 
+
+    public function collection()
+    {
+ 
+        $collectionModel = new CollectionModel();
+        $result = $collectionModel->collection($userId);
+
+        $thumbnails = [];
+        $tagsModel = new TagModel();
+        foreach ($result as $re){
+            $tagId = $re['id'];
+            $tags = $tagsModel->productTags($tagId);
+            $title = $re['post_title'];   //标题是单独的一个内容
+            $info = json_decode($re['more'],true);  //json数据解码成关联数组
+            $info['title'] = $title;  //在关联数组内添加title
+            $info['tags'] = $tags; //在关联数组内添加标签  标签是多个，在模板渲染时也需要嵌套循环输出
+            $thumbnails[] = $info;
+        }
+        $this->assign('lists',$thumbnails);
+        return $this->fetch('XXXX');
+    }
