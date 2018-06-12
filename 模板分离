@@ -1,0 +1,16 @@
+强迫症患者，看到重复的东西就想可不可以拆开复用
+tp5果然还是有模板的引入的，除开和Django的模板继承以外，还有个include方式。
+例如在html中加入的<include file="user@nav"/>
+这是引入user模块下的html文件，实现导航栏的共享。
+
+由于我引入的是个人信息栏上方的头像和个人信息等栏位，是需要对其进行模板渲染的。
+则可以在控制器构造一个渲染方法，而没有return，给其他方法调用。
+//渲染公共的头部个人信息
+    public function  commonUser(){
+        $userId = Session::get('userId');
+        $userinfo = new UserInfoModel();
+        $avatorsrc = $userinfo->getAvatarSrc($userId);
+        $this->assign('avatar',$avatorsrc);
+        
+        
+然后可以这样减少代码量。
