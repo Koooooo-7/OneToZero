@@ -1,0 +1,28 @@
+  layui.use(['element'], function() {
+        var $ = layui.jquery;
+        //监听验证码请求按钮
+        $(".mt-upd").on("click",function(){
+                $.ajax({
+                    type:"post",
+                    url:"{:url('user/person/edit')}",
+                    data:onedata,
+                    success: function (data) {
+                        parent.location.reload(); //刷新父亲
+                    },
+                    error:function (datas) {
+                        alert('提交失败，请稍后再试！');
+
+                    }
+                });
+        });
+            return false;
+        });
+        
+        
+        
+        下面介绍全页面刷新方法：有时候可能会用到
+window.location.reload()刷新当前页面.
+parent.location.reload()刷新父亲对象（用于框架）
+opener.location.reload()刷新父窗口对象（用于单开窗口）
+top.location.reload()刷新最顶端对象（用于多开窗口）
+        
