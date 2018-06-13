@@ -124,3 +124,49 @@ function send_mail($tomail, $randcode, $name ='' , $subject = '', $attachment = 
     }
     return $mail->Send() ? true : $mail->ErrorInfo;
 }
+
+
+
+
+
+发送带样式（背景图等）的邮件
+通过HTML内嵌的方式完成，但是好像不支持CSS。
+图片引自网络（可连接的对外服务器地址），然后要放在<table>中！
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<body  >
+   <table >
+   <tbody >
+    <tr>
+   <td  background="https://sz-btfsv2.ftn.qq.com/ftn_handler/4e0482269942fbba52491b9a1f3412341f4d86b784aa6a538e156f9c7f42b29ce7579193b3f78e09b213df49e5f5e21069f211b79016ffcdd68f994ab7ac67c8/?fname=*.png&pictype=scaled&size=1024*768" >
+    <div style="position:relative;color: #40485B;width:620px;min-height:508px;font-size: 14px;margin:0 auto;border: 1px solid #fff;">
+    	<div style="margin-top:56px;font-size:14px;text-align:left;margin-left:72px;margin-right:42px;">
+    		<div style="margin-bottom: 10px;">
+				<div style="font-size: 18px;font-weight:bold;line-height: 10px;padding: 10px 20px;">
+        注册验证
+				</div>
+				<div style="padding: 20px;">
+					<p><p>
+    您好
+				<a href="" target="_blank" style="text-decoration:underline;color: #064977; "></a>
+    !
+			</p>XXXXXXXXXXXXXXXXXXXXXX。</p>
+					<p>验证码：<span style="color: #064977;font-weight: bold">'.$randcode.'</span></p>
+					<p style="color:#9B9B9B;font-size: 12px;margin-top: 20px;">
+        @yhstream.com
+			</p>
+				</div>
+			</div>	
+			
+    	</div>
+	</div>
+	</td>
+	</tr>
+	  </tbody>
+	</table>
+</body>
+</html>';
