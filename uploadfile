@@ -1,0 +1,18 @@
+ 
+ 最简单的上传处理方式。
+ public  function  uptoimg()
+    {
+        $file = $_FILES['file'];  //上传文件file     POST方法上传 http://php.net/manual/zh/features.file-upload.post-method.php
+        $filename = $file['name'];  //获取文件名称
+        $new = md5($filename);    //随意混淆一下文件名
+        $filename_arr = explode('.', $file['name']);  //获取上传文件名称 eg: 123.jpg => ['123','jpg']
+        $ext = end($filename_arr); 'jpg'
+        $path = ROOT_PATH . 'public' . DS . 'uptest'. DS .'images'; // 根目录下的 public/upload/images  保存地点
+        $savePath   = ROOT_PATH . 'public' . DS . 'uptest'. DS .'images'. DS .$new.'.'.$ext; // 保存文件地址 包括文件名在内 不加.$ext即.jpg无法识别是什么文件
+        if (!file_exists($path)){
+            mkdir($path);
+        } 
+        $content = file_get_contents($file['tmp_name']);    //获取文件流
+        file_put_contents($savePath, $content,FILE_APPEND);  //以二进制流写入文件
+
+    }
