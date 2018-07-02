@@ -1,0 +1,18 @@
+在填写表单时F5刷新的时候给出提醒，确认操作。
+并且在按下提交键的时候刷新页面不会给出提醒。 ----- 立了个Flag。
+;(function{
+let data = 1;
+       $('#mt-submit').on('click',function () {
+         data = null;
+           });
+        window.onbeforeunload = function(){
+           if (data){
+                return "你确定要离开吗?";
+            }else {
+               console.log(data);
+            }
+        }
+    })();
+
+
+
