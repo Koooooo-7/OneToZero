@@ -1,0 +1,5 @@
+分页的问题，一般的代码就这样处理了。
+$list = $usersQuery->whereOr($keywordComplex)->
+     where($where)->where('user_checking',0)->order("create_time DESC")->paginate(10);
+结果我用的是belongstomany,看了下对象的区别，两者是不同的对象，我就想怎么转成上面的呢，然后就发现了getQuery。
+用了它，身体不疼痛，腰背不酸肿了。
