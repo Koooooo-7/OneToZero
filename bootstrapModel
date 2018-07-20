@@ -1,0 +1,110 @@
+弹出层用bootstraoModel来做，单个真的很好用。
+然后还结合了在jq22上面找的的一个下拉插件。
+
+
+
+但是！但是在php模板用foreach进行循环输出，要求每一个都能有一个按钮绑上一个model对象。
+那我就很显然得想到了，找一个变量让他们建立关系对不对。
+然后你看ID，每一个的ID都是独一无二的对不对，然后，我就弄成了这个样子:
+ <a href=""  data-toggle="modal"  data-taget={$vo['id']} id="mt-a" onclick="My(this)"
+ 是的，这样不就有一个不一样的modal了吗。然而并没有什么卵用...。
+ 于是才有了这样的。
+ <a href=""  data-toggle="modal"  data-id ={$vo['id']} id="mt-a" onclick="My(this)">封禁</a>
+但是id拿不到阿，只能ajax大法好。
+    <div class="modal fade mt-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                        &times;
+                                                    </button>
+                                                    <h2 class="modal-title" id="myModalLabel">
+                                                        操作确认
+                                                    </h2>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mt-chose">
+                                                        <div class="mt-left"><h5>请选择封禁企业原因</h5></div>
+                                                        <div class="content mt-right">
+                                                            <div class="select">
+                                                                <p data-value="" id="mt-p">备注栏填写其他原因</p>
+                                                                <ul>
+                                                                    <li data-value="审核不通过原因1">封禁不通过原因1</li>
+                                                                    <li data-value="审核不通过原因2">封禁不通过原因2</li>
+                                                                    <li data-value="审核不通过原因3">封禁不通过原因3</li>
+                                                                    <li data-value="审核不通过原因4">封禁不通过原因4</li>
+                                                                    <li data-value="审核不通过原因5">封禁不通过原因5</li>
+                                                                    <li data-value="备注栏填写其他原因">备注栏填写其他原因</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-textarea">
+                                                        <textarea class="form-control"  cols="60" rows="4" id="mt-t" placeholder="输入其他原因或者其他备注（50字以内）" ></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            
+                                            
+                                            
+ <script>                                           
+let i_need_a_var_to_use_really_too;
+    function My(e) {
+        i_need_a_var_to_use_really_too = e.getAttribute('data-id');
+        $('#myModal').modal('show');
+    }
+    $('.js-ajax-dialog-btn-mt').on('click', function (e) {
+        var $_this = this;
+        let firmid = i_need_a_var_to_use_really_too;
+        e.preventDefault();
+        Wind.use('artDialog', 'noty', function () {
+            var $this = $($_this),
+                refresh = $this.data('refresh');
+            let text = $('#mt-t').val();
+            let reason = $('#mt-p').text();
+            let datas = {'reason': reason, 'text': text,'flag':1,'id':firmid};
+            $.ajax({
+                url:"{:url('XXXXXXXXX')}",
+                type: 'post',
+                data:datas,
+                success: function (data) {
+                    if (data.code == 1) {
+                        noty({
+                            text: data.msg,
+                            type: 'success',
+                            layout: 'topCenter',
+                            modal: true,
+                            timeout: 800,
+                            callback: {
+                                afterClose: function () {
+                                    if (refresh == undefined || refresh) {
+                                        if (data.url) {
+                                            //返回带跳转地址
+                                            window.location.href = data.url;
+                                        } else {
+                                            //刷新当前页
+                                            reloadPage(window);
+                                        }
+                                    }
+                                }
+                            }
+                        }).show();
+
+                    } else if (data.code == 0) {
+                        //art.dialog.alert(data.info);
+                        art.dialog({
+                            content: data.msg,
+                            icon: 'warning',
+                            ok: function () {
+                                this.title(data.msg);
+                                return true;
+                            }
+                        });
+                    }
+                }
+            })
+
+        });
+    });
+     <\script>  
