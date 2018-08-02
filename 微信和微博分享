@@ -1,0 +1,24 @@
+微信和微博分享，其实就是那一段url给他们的接口，然后就，算是，好了吧...。
+有一点不好的地方就是我的url是拼接的...mmp阿，待解决。
+<script>
+    function shareWeibo() {
+        let url = window.location.href;
+        let contentTitle = $('#mt-title').text();
+        console.log(contentTitle);
+        let title =  "【"+document.title + "】" +contentTitle ;
+        let pic ='';
+        let sina = 'http://service.weibo.com/share/share.php?url='+url+'&title='+title+'&pic='+pic+'&searchPic=false';
+        window.open(sina,'shareSina',"width=800, height=600");
+    }
+</script>
+<script>
+    function shareWeixin() {
+        let url = window.location.href;
+        let wx = 'http://qr.liantu.com/api.php?text='+url;
+        let wxImg = '<img src="http://qr.liantu.com/api.php?text='+url+'x"/>'
+        $('#mt-2wm').html(wxImg);
+        $('#mt-2wm').toggle();
+
+    }
+</script>
+
