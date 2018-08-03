@@ -1,0 +1,40 @@
+不仅是belongTomany，还有hasmany等，如果在数据库的表里设置了多个主键。
+这时候设置了关联关系。
+ /**
+     * 关联分类表
+     */
+    public function brands()
+    {
+
+        return $this->belongsToMany('BrandModel', 'banner_brand', 'brand_id', 'post_id');
+    }
+    
+    
+    然后balabalabalaba去调用的时候。
+    $data  类型是  array 
+    语句:
+    $this->brands()->save($data);
+    报错:
+    Array to string conversion ....
+    
+    其实是在底层调用belongsTomany的时候，获取主键的时候获取到的主键出现了一个问题，因为有多个主键了阿。
+   之前用的时候，因为都是只有id这一个主键，所以没有问题，然后到这个表调用的时候就出现了问题。
+   对比了之前的程序的输出结果，排查出来了这个问题，
+   
+   
+   
+   解决办法：
+   1.直接了当。
+     和之前一样，直接就用一个主键就好了。
+     但是这样，不就怂了吗，不能逃避问题阿。
+     
+   2.迎面解决。
+     因为没有指定主键，所以他自己去通过getPk去获取主键，这时获取到了多个主键，然后就报错了。
+     既然如此，那我事先声明主键不就好了吗。
+     所以，还有一个解决办法，在模型中声明主键。
+     protected $pk = 'id';
+     
+     
+     参考 
+     https://blog.csdn.net/sinat_35767703/article/details/76684668
+    
