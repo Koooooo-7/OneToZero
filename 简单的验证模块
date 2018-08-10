@@ -1,5 +1,5 @@
 在JQ22上面扒下来的一个小东西。
-然后为了有标志位和后台交互，传入了一个回调函数，在执行完验证码的滑块拖动验证成功之后，回调函数会返回一个falg值，获取后来进行校验。
+然后为了有标志位和后台交互，传入了一个回调函数，在执行完验证码的滑块拖动验证成功之后，回调函数会返回一个flag值，获取后来进行校验。
 
 前台页面调用
 
@@ -15,8 +15,8 @@
     let validate = false;
     $('#drag').drag(function () {
     //  在引入的js里面加了一个a()方法，是用来返回标志位的，返回标志位应该是在drag()方法执行完毕后再执行，因为要drag()去改变这个标志位false=>true，所以想到了用回调函数。
-        validate =  $('#drag').a();    
-        // console.log(validate)   true
+        validate =  $('#drag').a();     
+        // console.log(validate)   flag值  true表示拖动了滑块完成了校验
         });
  </script>
  
