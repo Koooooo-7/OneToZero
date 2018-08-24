@@ -14,3 +14,12 @@ yum install nginx
 https://www.linuxidc.com/Linux/2017-04/142986.htm
 
 查看nginx 版本  nginx -v   查看更多信息  nginx -V 
+
+3.安装PHP
+ php在centOS上自带的是5.4的版本，有些低了，
+ 结果我还手贱给装上去了。
+卸载掉 # yum remove php*
+卸载参考  https://blog.csdn.net/u012569217/article/details/77506902
+然后更换源，安装PHP7.1
+参考https://blog.csdn.net/anzhen0429/article/details/79272893
+https://blog.csdn.net/qq_26245325/article/details/78916178
