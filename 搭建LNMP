@@ -12,3 +12,5 @@ yum install epel-release    //这里epel-release  没有空格。~
 yum install nginx 
 参考
 https://www.linuxidc.com/Linux/2017-04/142986.htm
+
+查看nginx 版本  nginx -v   查看更多信息  nginx -V 
