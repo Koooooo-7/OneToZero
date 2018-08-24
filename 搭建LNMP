@@ -33,7 +33,10 @@ https://www.cnblogs.com/bigbrotherer/p/7241845.html
 
 
 搭建完了之后就是Nginx的配置问题。
-
+tips: 每次操作完都要重启nginx  
+systemctl restart nginx
+service nginx restart
+systemctl status nginx
 首先是在Nginx的location当中我试着改了一下根目录
 location / {
 root /home/demo;
