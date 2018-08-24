@@ -28,3 +28,17 @@ https://blog.csdn.net/qq_26245325/article/details/78916178
 https://www.cnblogs.com/bigbrotherer/p/7241845.html
 会直接覆盖掉centOS上自带的mariadb
 我之前直接 #yum install mysql 过Orm...。
+
+
+搭建完了之后就是Nginx的配置问题。
+
+首先是在location当中我试着改了一下根目录
+
+root \home\demo
+index index.html
+
+然后在\home\demo\index.html中写入万能的"hello world!" 重启nginx 就OK啦！
+
+然后在里面我又新建了一个index.php
+这下就有问题了，出现的时候是页面没办法打开，而且直接给我把index.php下载下来了。
+原来是因为没有把.php的文件去配置进行解析。
