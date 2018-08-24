@@ -3,6 +3,7 @@
 想要先一步一步学习一下LNMP的搭建，没有去选择一键安装包,宝塔面板 参考:https://9sb.org/12。
 Bilibili上面也有一些视频。
 https://www.bilibili.com/video/av7536809?from=search&seid=15982435309227651817
+https://www.bilibili.com/video/av7536809?from=search&seid=4666953044647281697  /解决了解析php文件问题。
 
 
 1.安装epel源   是Linux的一个基础扩展
@@ -32,13 +33,28 @@ https://www.cnblogs.com/bigbrotherer/p/7241845.html
 
 搭建完了之后就是Nginx的配置问题。
 
-首先是在location当中我试着改了一下根目录
+首先是在Nginx的location当中我试着改了一下根目录
+location / {
+root /home/demo;
+index index.html;
+}
 
-root \home\demo
-index index.html
 
-然后在\home\demo\index.html中写入万能的"hello world!" 重启nginx 就OK啦！
+然后在/home/demo/index.html中写入万能的"hello world!" 重启nginx 就OK啦！
 
 然后在里面我又新建了一个index.php
 这下就有问题了，出现的时候是页面没办法打开，而且直接给我把index.php下载下来了。
 原来是因为没有把.php的文件去配置进行解析。
+https://www.bilibili.com/video/av7536809?from=search&seid=4666953044647281697
+
+需要在/etc/nginx/nginx.conf 中添加
+location ~.php$ {
+  root root/home/demo;
+  fastcgi_pass 127.0.0.1:9000   #这是php-fpm 的监听端口
+  fastcgi_index index.php;
+  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  include fastcgi_param  #nginx的一个相关文件
+  }
+  
+  
+查看监听端口 netstat -tunlp
