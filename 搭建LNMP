@@ -26,3 +26,5 @@ https://blog.csdn.net/qq_26245325/article/details/78916178
 
 4.安装mysql 
 https://www.cnblogs.com/bigbrotherer/p/7241845.html
+会直接覆盖掉centOS上自带的mariadb
+我之前直接 #yum install mysql 过Orm...。
