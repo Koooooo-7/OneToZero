@@ -33,5 +33,7 @@ local_root=/home/demo 这里不要有空格，好像他不识别空格诶。   �
 这时候在vsftpd.conf配置项中加入  allow_writeable_chroot=YES 开启读写权限，或者说去移除这个目录下的所有用户权限chmod a-w /home/user。
 参考地址[https://www.cnblogs.com/mrcln/p/6179673.html]
 </p>
-### 每次配置完后记得重启一下vsftpd。
+
+<br>
+每次配置完后记得重启一下vsftpd。
 
