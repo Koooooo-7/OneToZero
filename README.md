@@ -1,6 +1,6 @@
 # ThinkPHP5 CMF
 ## 因为工作需要，接触PHP。  
-## 实战型学习，开始接触ThinkphpCMF5.0框架。
+## 实战型学习，看了几个小时PHP语法，开始接触ThinkphpCMF5.0框架。
 <br>
 php是世界上最好的语言(逃 :smirk: ，tp5是世界上最好的框架(伪。:boom:
 <br>
