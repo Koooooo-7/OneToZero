@@ -32,11 +32,15 @@ local_root=/home/demo 这里不要有空格，好像他不识别空格诶。   �
 这时候试着用用户来访问ftp发现你可以看到进来的demo目录的，但是你还是没有读写权限。
 这时候在vsftpd.conf配置项中加入  allow_writeable_chroot=YES 开启读写权限，或者说去移除这个目录下的所有用户权限chmod a-w /home/user。
 参考地址[https://www.cnblogs.com/mrcln/p/6179673.html]
+  [https://www.jianshu.com/p/9abad055fff6
+]
 </p>
 
 <br>
 每次配置完后记得重启一下vsftpd。
 
 
-回顾的时候又看到一篇内容，感觉这个搭建过程好像比较详细(?)下次可以尝试一下。
-https://www.jianshu.com/p/9abad055fff6
+# 如果只是上传文件，可以直接用SCP协议的，winSCP。~~~
+
+
+#如果
