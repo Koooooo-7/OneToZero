@@ -37,3 +37,6 @@ local_root=/home/demo 这里不要有空格，好像他不识别空格诶。   �
 <br>
 每次配置完后记得重启一下vsftpd。
 
+
+回顾的时候又看到一篇内容，感觉这个搭建过程好像比较详细(?)下次可以尝试一下。
+https://www.jianshu.com/p/9abad055fff6
