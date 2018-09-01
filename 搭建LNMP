@@ -28,6 +28,10 @@ https://blog.csdn.net/qq_26245325/article/details/78916178
 
 4.安装mysql 
 https://www.cnblogs.com/bigbrotherer/p/7241845.html
+   1）下载并安装MySQL官方的 Yum Repository
+       [root@localhost ~]# wget -i -c http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm
+   2）[root@localhost ~]# yum -y install mysql57-community-release-el7-10.noarch.rpm
+   3）[root@localhost ~]# yum -y install mysql-community-server  这步可能会花些时间，安装完成后就会覆盖掉之前的mariadb。
 会直接覆盖掉centOS上自带的mariadb
 我之前直接 #yum install mysql 过Orm...。
 
