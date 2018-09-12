@@ -77,4 +77,5 @@ location ~.php$ {
   }
   
   
-查看监听端口 netstat -tunlp
+查看监听端口 TCP/UDP  netstat -tunlp
+查看监听端口TCP   netstat -ntpl
