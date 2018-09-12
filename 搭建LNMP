@@ -18,6 +18,8 @@ https://www.linuxidc.com/Linux/2017-04/142986.htm
 查看nginx 版本  nginx -v   查看更多信息  nginx -V 
 
 3.安装PHP
+安装 php-fpm  PHP进程管理的一个东东
+安装PHP7.0的这个   yum install -y php70w-fpm
  php在centOS上自带的是5.4的版本，有些低了，
  结果我还手贱给装上去了。
 卸载掉# yum remove php*
