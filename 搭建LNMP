@@ -20,11 +20,21 @@ https://www.linuxidc.com/Linux/2017-04/142986.htm
 3.安装PHP
  php在centOS上自带的是5.4的版本，有些低了，
  结果我还手贱给装上去了。
-卸载掉 # yum remove php*
+卸载掉# yum remove php*
 卸载参考  https://blog.csdn.net/u012569217/article/details/77506902
 然后更换源，安装PHP7.1
 参考https://blog.csdn.net/anzhen0429/article/details/79272893
 https://blog.csdn.net/qq_26245325/article/details/78916178
+
+yum安装 php源
+rpm -ivh http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+安装PHP7
+1.直接全部安装  yum install php70w
+2.只安装必要的东西  yum install -y php70w.x86_64 php70w-cli.x86_64 php70w-common.x86_64 
+ php70w-gd.x86_64 php70w-ldap.x86_64 php70w-mbstring.x86_64 php70w-mcrypt.x86_64 php70w-mysql.x86_64 php70w-pdo.x86_64 php70w-fpm
+
+查看当前php版本
+php -v
 
 4.安装mysql 
 https://www.cnblogs.com/bigbrotherer/p/7241845.html
