@@ -73,7 +73,7 @@ location ~.php$ {
   fastcgi_pass 127.0.0.1:9000   #这是php-fpm 的监听端口
   fastcgi_index index.php;
   fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-  include fastcgi_param  #nginx的一个相关文件
+  include fastcgi_params  #nginx的一个相关文件
   }
   
   
