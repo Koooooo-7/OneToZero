@@ -1,0 +1,16 @@
+用的是wamp的环境，
+小伙伴用nginx的服务器上传发现没有问题，我这边上传失败。
+因为我们的代码是一样的，那变量应该不是在代码这边。
+想到可能是服务器这边对上传的限制，果不其然。
+
+
+Apache默认对上传文件和post文件的大小有限制，这时候，可以在wamp上直接更改php中
+"PHP设置"的
+upload_max_filesize =2m ;，即允许上传文件大小的最大值。默认为2M
+post_max_size = 8m ;指通过表单POST给PHP的所能接收的最大值，包括表单里的所有值。默认为8M
+
+实际上就是修改了apache中的php.ini文件。
+
+参考https://blog.csdn.net/qq_23596421/article/details/72639921
+
+
