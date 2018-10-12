@@ -1,0 +1,74 @@
+思路:
+通过keyup函数去触发ajax查询。
+但是有一个问题是我希望能把查询到的id也一起传过去。
+可以一起传过去去后台做分割，但是这样感觉不太好。
+那我就再隐藏了一个只有id的input层。
+因为搜索出来的选择的结果对应的index和只有id的input层是一一对应的，所以可以共用这一个index。
+那样就可以分别传过去选择的专家名字和对应的id。
+
+//动态查询专家名称
+    $(function (){
+
+        $('#professor_name').keyup(
+            function () {
+                setTimeout(function () {
+                    var professor_name = $.trim($('#professor_name').val());
+                    if(professor_name === ''){
+                        return false;
+                    }
+                    $.ajax({
+                        url: "{:url('AdminProfessorPost/search_professor')}",
+                        type: 'POST',
+                        data: '&professor_name='+professor_name,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            $('#professor_name_list').html('');
+                            $('#professor_id_list').html('');
+                            if(data.length == 0){
+                                // alert('NO')
+                                $('#professor_name_list').append('<li><a  href="{:url('AdminProfessor/index')}" >
+                                没有该专家或被下架，点我去看看 </a></li>');
+                            }
+                            else {
+                                for(var x in data){
+                                    $('#professor_name_list').append('<li><a href="javascript:;">'
+                                    +data[x]['id']+'【昵称】'+data[x]['post_title']+'【真实姓名】'+data[x]['post_name']+'</a></li>');
+                                    $('#professor_id_list').append('<li><a href="javascript:;">'+data[x]['id']+'</a></li>');
+
+                                }
+
+
+                                var ipt=document.getElementById('professor_name');
+                                var ul=document.getElementById('professor_name_list');
+                                var idt = document.getElementById('professor_id');
+                                // console.log(idl);
+
+                                ipt.onfocus=function(){
+                                    ul.style.display='block';
+                                };
+                                ipt.onblur=function(){
+                                    setTimeout(function(){
+                                        ul.style.display='none';
+                                    },200)
+
+                                };
+                                //模拟option点击事件
+                                
+                                $('#professor_name_list').find('li').on('click', function(){
+                                    //获取被点击的li
+                                    var num = $(this).index();
+                                    //写入id
+                                    var obd =$("#professor_id_list").find("li").get(num);
+                                    idt.value=obd.innerText;
+                                    //写入内容
+                                    var obt =$("#professor_name_list").find("li").get(num);
+                                    ipt.value=obt.innerText;
+                                })
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
+                },700);
+            })
+    });
