@@ -1,0 +1,9 @@
+参考
+https://blog.csdn.net/happy_jijiawei/article/details/52191098
+
+用百度编辑器存入数据库的内容是经过转义的，拿出来的时候，需要重新转成前台html形式，
+才不会在编辑器中出现HTML代码。
+<th>内容</th>
+   <td>
+      <script  type="text/plain" id="content" name="post[post_content]">{$vo.post_content|html_entity_decode}</script>
+   </td>
