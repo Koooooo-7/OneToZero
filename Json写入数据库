@@ -1,0 +1,29 @@
+1:最直接的方法  json_encode 手动转化然后写入数据库，出来的时候再json_decode一下下。
+  这样写入数据库的时候，汉字会被按照数据库设置编码方式编码。
+  但是取出来的时候又好啦，没毛病。
+  
+2: 操作Model层。推荐。
+   1）强制开启array写入。
+   根据官方文档开发手册https://www.kancloud.cn/manual/thinkphp5/138669
+   
+   如果设置为强制转换为array类型，系统会自动把数组编码为json格式字符串写入数据库，取出来的时候会自动解码。
+   所以可以对想要写入json的字段进行强制类型转化。
+   eg:
+   
+   protected $type = [
+        'more' => 'array',
+    ];
+    
+    
+    2)新的针对json的方法。
+    官方文档
+    https://www.kancloud.cn/manual/thinkphp5_1/507621
+    
+    但是！
+    为V5.1.4+版本开始支持，可以更为方便的操作模型的JSON数据字段。
+    
+    感觉是array强制类型转化的另外一种实现。
+    有机会看一下源码。
+    
+    // 设置json类型字段
+	  protected $json = ['info'];
