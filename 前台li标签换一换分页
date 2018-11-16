@@ -1,0 +1,54 @@
+HTML
+<div class="panel-box">
+                    <div class="mt-tags-change">
+                    <ul class="chose-tags" id="mt-addtags">
+                        <volist name = "tags" id = "vo" offset="0" length="12">
+                            <li><a href="{:url('valley/valley/tags',array('id'=>$vo['id']))}" target="_blank" class="layui-btn layui-btn-radius layui-btn-primary">{$vo.name}</a> </li>
+                        </volist>
+                    </ul>
+                    </div>
+                    <!--隐藏的li-->
+                    <div  class="mt-tags-change" hidden>
+                        <ul class="chose-tags" id="mt-tags" >
+                            <volist name = "tags" id = "vo" >
+                                <li><a href="{:url('valley/valley/tags',array('id'=>$vo['id']))}" target="_blank" class="layui-btn layui-btn-radius layui-btn-primary">{$vo.name}</a> </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+                
+                
+ JS
+   //标签换一换
+    $(function () {
+        var count_li = $('#mt-tags li').length;
+        //一次12个
+        var $listRows = 12;  // 从12开始是因为这时候通过PHP在前台渲染了12个。
+        var lis=$('#mt-tags').find('li');
+        var ilis = lis.slice();   // 要用这个方式拷贝一下li，直接去用slice切取li的时候，会产生和splice的效果，真让人头大。
+        $('#mt-change-tags').on('click',function () {
+
+            if (count_li<12){
+                //如果低于12个无换一换
+                return false;
+            }
+            //大于12个时
+            $('#mt-addtags').html('');
+            var llist = ilis.slice($listRows,$listRows+12);
+            $listRows = $listRows+12;
+            //换完一圈了
+            if ($listRows>count_li){
+                $listRows = 0;    //由于一开始就渲染了12个，所以这里其实才是第一次从隐藏的中拿出前面12个。
+            }
+            for(var i=0; i<llist.length; i++){
+                $('#mt-addtags').append(llist[i]);
+            }
+        });
+    });
+    
+    
+    原理很简单，隐藏部分渲染出来了全部，每次在那个里面拿上一部分去放到前面显示
+    如果拿完了，就重新开始。
+    网页第一次渲染的时候放上去了12个，所以重新拿的时候从0开始。
+    切分的想法参考了tp5的原生分页。
+    
