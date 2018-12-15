@@ -1,0 +1,146 @@
+记录看过的一段代码。
+输入的初始$trees结构为[['list' => [46],status=>1]]    46为选择的id，业务场景是需要展示出当前标签的父级关系和子集关系。
+通过构造[['list' => ['46'],status=>1]]转换为 [['list' => [1,41,46],status=>1], [['list' => [1,40,46],status=>1]...]这样的数组，每一个
+list数组里面便是从根标签到子标签的路径。
+同理，从当前标签到其子标签的所有路径 构造[['list' => ['46'],status=>1]]
+转换为['list' => [46,78,142],status=>1], [['list' => [46,141,222],status=>1]...]这样的数组
+每一个路径都是从当前标签到其最末尾子标签的路径。
+最后通过getTree方法构造前台展示的结构HTML字符串。
+   /**
+     * 父级标签
+     * @return array
+     */
+    public function adminTagTreeUp($trees, $type = 1){
+        // echo "\n---\n";
+        // print_r($trees);
+        $status = false;
+        //trees:当前标签id，以树的方式传递，包含list和status,list包含标签id
+        $trees_new = $trees;
+        foreach($trees as $k=>$v){
+            //获取当前标签id
+            $selectId = current($v['list']);
+            if ($selectId == 0 || $v['status'] == 0) {
+                //如果符合条件，跳入下个循环
+                continue;
+            }
+            $tagtagModel = new TagTagModel();
+            $where['tag_id'] = ['eq', $selectId];
+            //当前标签的标签关系记录，一般只有一条，一个标签只能有一个父标签
+            $tagtag = $tagtagModel->order("list_order ASC")->where($where)->select()->toArray();
+            // echo "---------";
+            // print_r($tagtag);
+            // echo "---------";
+            if(empty($tagtag) || $tagtag[0]['pid'] == 0){   //标签已是顶级标签
+                $v['status'] = 0;
+                $trees_new[$k] = $v;
+            }else{
+                unset($trees_new[$k]);
+                foreach ($tagtag as $value) {
+                    if($value['pid'] != 0){
+                        $list           = $v['list'];
+                        array_unshift($list, $value['pid']);
+                        $vv['list']     = $list;
+                        $vv['status']   = 1;
+                        $trees_new[]    = $vv;
+                    }
+                }
+                $status = true;
+            }
+        }
+        if($status){
+            return $this->adminTagTreeUp($trees_new);
+        }else{
+            if($type == 1){
+                //组织数据
+                $trees_str = $this->getTree($trees_new);
+
+                return $trees_str;
+            }else{
+                return $trees_new;
+            }
+        }
+    }
+
+
+    /**
+     * 子级标签
+     * @return array
+     */
+    public function adminTagTreeDown($trees, $type = 1){
+        // echo "\n---\n";
+        // print_r($trees);
+        $status = false;
+        $trees_new = $trees;
+        foreach($trees as $k=>$v){
+            //end获取数组最后一个元素的值
+            $selectId = end($v['list']);
+            if ($selectId == 0 || $v['status'] == 0) {
+                continue;
+            }
+            $tagtagModel = new TagTagModel();
+            $where['pid'] = ['eq', $selectId];
+            //获取该标签的所有子标签信息
+            $tagtag = $tagtagModel->order("list_order ASC")->where($where)->select()->toArray();
+            /*echo "---------<br>";
+            print_r($tagtag);
+            echo "---------<br>";*/
+            if(empty($tagtag)){   //标签已没有子标签
+                $v['status'] = 0;
+                $trees_new[$k] = $v;
+            }else{
+                //如果查询完该标签的子标签，就销毁该标签
+                unset($trees_new[$k]);
+                foreach ($tagtag as $value) {
+                    $list           = $v['list'];
+                    $list[]         = $value['tag_id'];
+                    $vv['list']     = $list;
+                    $vv['status']   = 1;
+                    //该标签所有子标签的关系数组
+                    $trees_new[]    = $vv;
+                }
+                $status = true;
+            }
+        }
+        if($status){
+            return $this->adminTagTreeDown($trees_new, $type);
+        }else{
+            if($type == 1){
+                //组织数据
+                $trees_str = $this->getTree($trees_new);
+
+                return $trees_str;
+            }else{
+                return $trees_new;
+            }
+        }
+    }
+
+    public function getTree($trees_new){
+        //组织数据
+        $trees_up   = array();
+        $trees_node = array();
+        foreach($trees_new as $v){
+            $trees_up[] = $v['list'];
+            $trees_node = array_merge($trees_node, $v['list']);
+        }
+        //移除重复的值
+        $trees_node = array_unique($trees_node);
+        $where_new['id'] = ['in', $trees_node];
+        $trees_node_arr = $this->where($where_new)->column("name", "id");
+        $str = "";
+        $nbsp = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        foreach($trees_up as $vo){
+            $i = 0;
+            foreach($vo as $id){
+                $nbsp_str = "";
+                for($k = 0; $k < $i+1; $k++){
+                    $nbsp_str .= $nbsp;
+                }
+                $str .= $nbsp_str.'<a href="' . url("AdminTag/edit", ["id" => $id]) . '">'.$trees_node_arr[$id].'</a></br>';
+                $i++;
+            }
+            $str .= "</br>";
+        }
+
+        return $str;
+    }
